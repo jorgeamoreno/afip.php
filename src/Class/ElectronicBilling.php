@@ -221,7 +221,7 @@ class ElectronicBilling extends AfipWebService {
 	**/
 	public function GetPointsOfSale()
 	{
-		return $this->ExecuteRequest('FEParamGetPtosVenta')->ResultGet->PtoVta;
+		return $this->ExecuteRequest('FEParamGetPtosVenta')->ResultGet->PtoVenta;
 	}
 
 	/**
