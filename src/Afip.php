@@ -12,7 +12,7 @@
  * @package Afip
  **/
 
-include_once __DIR__.'/libs/mixpanel/Mixpanel.php';
+// include_once __DIR__.'/libs/mixpanel/Mixpanel.php';
 include_once __DIR__.'/libs/Requests/Requests.php';
 
 Requests::register_autoloader();
@@ -103,7 +103,7 @@ class Afip {
 		'RegisterScopeThirteen'
 	);
 
-	var $mixpanel;
+	// var $mixpanel;
 	var $AdminClient;
 
 	function __construct($options)
@@ -111,25 +111,25 @@ class Afip {
 		ini_set("soap.wsdl_cache_enabled", "0");
 
 		// Create the Mixpanel class instance
-		$this->mixpanel = Mixpanel::getInstance("e87ee11c8cc288e5c5dc213c4d957c7e");
+		//$this->mixpanel = Mixpanel::getInstance("e87ee11c8cc288e5c5dc213c4d957c7e");
 
-		$this->mixpanel->register('afip_sdk_library', 'php');
+		// $this->mixpanel->register('afip_sdk_library', 'php');
 
 		if (isset($_SERVER['REMOTE_ADDR'])) {
-			$this->mixpanel->register('ip', $_SERVER['REMOTE_ADDR']);
+			// $this->mixpanel->register('ip', $_SERVER['REMOTE_ADDR']);
 		}
 
 		if (!isset($options['CUIT'])) {
 			throw new Exception("CUIT field is required in options array");
 		} else {
 			$this->CUIT = $options['CUIT'];
-			$this->mixpanel->register('distinct_id', $options['CUIT']);
+			// $this->mixpanel->register('distinct_id', $options['CUIT']);
 		}
 
 		if (!isset($options['production'])) {
 			$options['production'] = FALSE;
 		}
-		$this->mixpanel->register('production', $options['production']);
+		// $this->mixpanel->register('production', $options['production']);
 
 		if (!isset($options['passphrase'])) {
 			$options['passphrase'] = 'xxxxx';
@@ -179,10 +179,11 @@ class Afip {
 			throw new Exception("Failed to open ".$this->PRIVATEKEY."\n", 2);
 		if (!file_exists($this->WSAA_WSDL)) 
 			throw new Exception("Failed to open ".$this->WSAA_WSDL."\n", 3);
-		
+		/*
 		try {
 			$this->mixpanel->track("initialized", $options);
 		} catch (Exception $e) {}
+		*/
 	}
 
 	/**
@@ -569,7 +570,7 @@ class AfipWebService
 
 		$results = $this->soap_client->{$operation}($params);
 
-		$this->afip->TrackUsage($this->options['service'], $operation, $params);
+		// $this->afip->TrackUsage($this->options['service'], $operation, $params);
 		
 		$this->_CheckErrors($operation, $results);
 
