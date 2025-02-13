@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SDK for AFIP Electronic Billing (wsfe1)
  *
@@ -178,42 +179,6 @@ class ElectronicBilling extends AfipWebService
     }
 
     /**
-     * Create CAEA
-     *
-     * Send a request to AFIP servers  to create a CAEA
-     *
-     * @param int $period 		Time period
-     * @param int $fortnight	Monthly fortnight (1 or 2)
-     **/
-    public function CreateCAEA($period, $fortnight)
-    {
-        $req = array(
-            'Periodo' => $period,
-            'Orden' => $fortnight
-        );
-
-        return $this->ExecuteRequest('FECAEASolicitar', $req)->ResultGet;
-    }
-
-    /**
-     * Get CAEA
-     *
-     * Ask to AFIP servers for a CAEA information
-     *
-     * @param int $period 		Time period
-     * @param int $fortnight	Monthly fortnight (1 or 2)
-     **/
-    public function GetCAEA($period, $fortnight)
-    {
-        $req = array(
-            'Periodo' => $period,
-            'Orden' => $fortnight
-        );
-
-        return $this->ExecuteRequest('FECAEAConsultar', $req)->ResultGet;
-    }
-
-    /**
      * Asks to AFIP Servers for sales points availables {@see WS
      * Specification item 4.11}
      *
@@ -326,6 +291,15 @@ class ElectronicBilling extends AfipWebService
     public function GetTaxTypes()
     {
         return $this->ExecuteRequest('FEParamGetTiposTributos')->ResultGet->TributoTipo;
+    }
+
+    public function GetCondicionIvaReceptor($tipoComprobante)
+    {
+        $req = array(
+            'ClaseCmp' 	=> $tipoComprobante,
+        );
+
+        return $this->ExecuteRequest('FEParamGetCondicionIvaReceptor', $req)->ResultGet;
     }
 
     /**
